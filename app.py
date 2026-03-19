@@ -10,7 +10,7 @@ import time
 # -----------------------------
 # Load Model & Scaler
 # -----------------------------
-model = joblib.load("model.pkl")  # نفس اللي خزنت
+model = joblib.load("model.pkl")
 scaler = joblib.load("scaler.pkl")
 
 # -----------------------------
@@ -45,21 +45,21 @@ st.markdown("""
 st.markdown("---")
 
 # -----------------------------
-# User Inputs
+# User Inputs (Number Inputs for mobile-friendly)
 # -----------------------------
 st.header("Enter Your Data")
 
 col1, col2 = st.columns(2)
 with col1:
-    age = st.slider("Age", 18, 70, 25)
-    weight = st.slider("Weight (kg)", 40, 150, 70)
-    height = st.slider("Height (cm)", 140, 210, 170)
+    age = st.number_input("Age", min_value=18, max_value=70, value=25, step=1)
+    weight = st.number_input("Weight (kg)", min_value=40, max_value=150, value=70)
+    height = st.number_input("Height (cm)", min_value=140, max_value=210, value=170)
 
 with col2:
-    sleep = st.slider("Sleep (hours)", 0, 12, 7)
-    exercise = st.slider("Exercise (hours/week)", 0, 14, 3)
-    steps = st.slider("Daily Steps", 0, 20000, 6000)
-    calories = st.slider("Calories", 1000, 4000, 2000)
+    sleep = st.number_input("Sleep (hours)", min_value=0, max_value=12, value=7)
+    exercise = st.number_input("Exercise (hours/week)", min_value=0, max_value=14, value=3)
+    steps = st.number_input("Daily Steps", min_value=0, max_value=20000, value=6000)
+    calories = st.number_input("Calories", min_value=1000, max_value=4000, value=2000)
 
 # -----------------------------
 # Prediction Button
@@ -73,7 +73,7 @@ if st.button("Analyze"):
     user_scaled = scaler.transform(user_data)
     cluster = model.predict(user_scaled)[0]
 
-    # Correct mapping based on your data analysis
+    # Mapping clusters
     cluster_names = {
         0: ("⚖️ Average Lifestyle", "warning"),
         1: ("🛑 Sedentary", "error"),
@@ -107,4 +107,3 @@ if st.button("Analyze"):
 # Footer
 # -----------------------------
 st.markdown("---")
-
